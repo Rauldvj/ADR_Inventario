@@ -1,0 +1,233 @@
+<!-- component -->
+<style>
+    /* Compiled dark classes from Tailwind */
+    .dark .dark\:divide-gray-700 > :not([hidden]) ~ :not([hidden]) {
+      border-color: rgba(55, 65, 81);
+    }
+    .dark .dark\:bg-gray-50 {
+      background-color: rgba(249, 250, 251);
+    }
+    .dark .dark\:bg-gray-100 {
+      background-color: rgba(243, 244, 246);
+    }
+    .dark .dark\:bg-gray-600 {
+      background-color: rgba(75, 85, 99);
+    }
+    .dark .dark\:bg-gray-700 {
+      background-color: rgba(55, 65, 81);
+    }
+    .dark .dark\:bg-gray-800 {
+      background-color: rgba(31, 41, 55);
+    }
+    .dark .dark\:bg-gray-900 {
+      background-color: rgba(17, 24, 39);
+    }
+    .dark .dark\:bg-red-700 {
+      background-color: rgba(185, 28, 28);
+    }
+    .dark .dark\:bg-green-700 {
+      background-color: rgba(4, 120, 87);
+    }
+    
+    @media only screen and (min-width: 768px) {
+        .header-right {
+            width: calc(100% - 16rem);
+        }        
+    }
+  </style>
+  <div x-data="setup()" :class="{ 'dark': isDark }">
+      <div class=" flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white">
+  
+        {% block navbar %} 
+            {% include 'componentes/navbar.html' %}
+        {% endblock %}
+      
+       <!-- Sidebar -->
+<div class="fixed flex flex-col top-12 left-0 w-14 hover:w-64 md:w-64 bg-red-700 dark:bg-gray-900 h-full text-white transition-all duration-300 border-none z-10 sidebar">
+  <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
+    <ul class="flex flex-col py-4 space-y-1">
+
+      {% if group_name_singular == 'ADR' %}
+      <!-- Menú desplegable de Gestión de Usuarios -->
+      <li x-data="{ open: false }" class="relative">
+        <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-2 text-sm font-semibold text-left hover:bg-red-600 dark:hover:bg-gray-800">
+          <span>GESTIÓN DE USUARIOS</span>
+          <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <ul x-show="open" class="pl-8 mt-2 space-y-1 overflow-hidden text-sm transition-all duration-200" style="display: none;">
+          <li>
+            <a href="{% url 'profile_list' %}" class="flex items-center p-2 text-white hover:bg-red-600 dark:hover:bg-gray-800 rounded-md">
+              <span class="ml-2">Usuarios</span>
+            </a>
+          </li>
+      
+        </ul>
+      </li>
+      {% endif %}
+
+      <!-- Menú desplegable de Gestión de Recursos de TI-->
+      <li x-data="{ open: false }" class="relative">
+        <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-2 text-sm font-semibold text-left hover:bg-red-600 dark:hover:bg-gray-800">
+          <span>GESTIÓN RECURSOS TI</span>
+          <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <ul x-show="open" class="pl-8 mt-2 space-y-1 overflow-hidden text-sm transition-all duration-200" style="display: none;">
+          <li>
+            <a href="{% url 'all_in_one'%}" class=" relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">All In One</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'all_in_one_adm'%}" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">All In One Administrativos</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'notebooks'%}" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Notebooks</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'mini_pc'%}" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Mini PC</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'proyectores'%}" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Proyectores</span>
+            </a>
+          </li>
+          <!-- Añade más enlaces si es necesario -->
+        </ul>
+      </li>
+
+      <li x-data="{ open: false }" class="relative">
+        <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-2 text-sm font-semibold text-left hover:bg-red-600 dark:hover:bg-gray-800">
+          <span>GESTIÓN DE INVENTARIO ADR</span>
+          <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <ul x-show="open" class="pl-8 mt-2 space-y-1 overflow-hidden text-sm transition-all duration-200" style="display: none;">
+          <li>
+            <a href="{% url 'bodega_adr'%}" class="relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Bodega ADR</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'azotea_adr'%}" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Azotea</span>
+            </a>
+          </li>
+          <!-- Añade más enlaces si es necesario -->
+        </ul>
+      </li>
+      
+      <li x-data="{ open: false }" class="relative">
+        <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-2 text-sm font-semibold text-left hover:bg-red-600 dark:hover:bg-gray-800">
+          <span>GESTIÓN DE REPORTE DE TI</span>
+          <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <ul x-show="open" class="pl-8 mt-2 space-y-1 overflow-hidden text-sm transition-all duration-200" style="display: none;">
+          <li>
+            <a href="{% url 'reporte_equipos' %}" class="relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Equipos en Reporte</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'entrega_equipos_reporte' %}" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6">
+              <span class="inline-flex justify-center items-center ml-4">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/200/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </span>
+              <span class="ml-2 text-sm tracking-wide truncate">Equipos Entregados</span>
+            </a>
+          </li>
+          <!-- Añade más enlaces si es necesario -->
+        </ul>
+      </li>
+
+
+      
+      <li>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="mt-3 relative flex flex-row items-center h-6 focus:outline-none hover:bg-red-700 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-red-500 dark:hover:border-gray-800 pr-6 w-full text-left">
+                <span class="inline-flex justify-center items-center ml-4">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12h7m0 0l-3-3m3 3l-3 3m0-3H3"></path>
+                    </svg>
+                </span>
+                <span class="ml-2 text-sm tracking-wide truncate">Logout</span>
+            </button>
+        </form>
+    </li>
+    </ul>
+  </div>
+</div>
+<!-- ./Sidebar -->
+
+        
+
+      </div>
+    </div>    
+  
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+    <script>
+      const setup = () => {
+        const getTheme = () => {
+          if (window.localStorage.getItem('dark')) {
+            return JSON.parse(window.localStorage.getItem('dark'))
+          }
+          return !!window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        }
+  
+        const setTheme = (value) => {
+          window.localStorage.setItem('dark', value)
+        }
+  
+        return {
+          loading: true,
+          isDark: getTheme(),
+          toggleTheme() {
+            this.isDark = !this.isDark
+            setTheme(this.isDark)
+          },
+        }
+      }
+    </script>

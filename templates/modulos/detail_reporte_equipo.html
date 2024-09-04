@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle del Equipo{% endblock %}
+
+{% block sidebar %}
+    {% include 'componentes/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="ml-64 mx-auto">
+    <div class="flex flex-col md:flex-row">
+        <!-- Contenedor de la imagen -->
+        <div class="flex-shrink-0 w-1/3 md:w-1/4 flex items-center justify-center p-4">
+            <img class="w-full h-auto rounded-lg shadow-lg" src="/static/Imagenes/adr_icon.png" alt="Imagen All In One">
+        </div>
+        <!-- Contenedor del detalle -->
+        <div class="flex-2 w-1/3 p-4 md:p-8 bg-gradient-to-r from-red-900 to-red-600 rounded-lg shadow-xl">
+            <h2 class="text-white text-2xl font-sans mb-4">Detalle del Equipo</h2>
+
+            <!-- Detalle del equipo -->
+            <div class="space-y-4">
+                <!-- Campo Entregado por -->
+                <div class="mb-4">
+                    <label for="entregado_por" class="form-label text-white text-sm font-sans italic mb-1 block">Entregado por</label>
+                    <input type="text" id="entregado_por" class="form-input" value="{{ reporte_equipo.entregado_por }}" readonly>
+                </div>
+                
+                <!-- Campos del equipo -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <div class="flex flex-col">
+                        <label for="activo" class="form-label text-white text-sm font-sans italic mb-1 block">Tipo de Activo</label>
+                        <input type="text" id="activo" class="form-input" value="{{ reporte_equipo.activo }}" readonly>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="marca" class="form-label text-white text-sm font-sans italic mb-1 block">Marca</label>
+                        <input type="text" id="marca" class="form-input" value="{{ reporte_equipo.marca }}" readonly>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="n_serie" class="form-label text-white text-sm font-sans italic mb-1 block">Número de Serie</label>
+                        <input type="text" id="n_serie" class="form-input" value="{{ reporte_equipo.n_serie }}" readonly>
+                    </div>
+                </div>
+
+                <!-- Campos adicionales -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="flex flex-col">
+                        <label for="unive" class="form-label text-white text-sm font-sans italic mb-1 block">UNIVE</label>
+                        <input type="text" id="unive" class="form-input" value="{{ reporte_equipo.unive }}" readonly>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="bdo" class="form-label text-white text-sm font-sans italic mb-1 block">BDO</label>
+                        <input type="text" id="bdo" class="form-input" value="{{ reporte_equipo.bdo }}" readonly>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="netbios" class="form-label text-white text-sm font-sans italic mb-1 block">NetBios</label>
+                        <input type="text" id="netbios" class="form-input" value="{{ reporte_equipo.netbios }}" readonly>
+                    </div>
+                </div>
+                
+                
+            </div>
+
+            <!-- Enlace Regresar -->
+            <div class="flex justify-start mt-14">
+                <a href="{% url 'reporte_equipos' %}" class="bg-red-700 hover:bg-red-600 text-white font-medium py-2 px-2 rounded w-56">
+                    Regresar a Reporte Equipos
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

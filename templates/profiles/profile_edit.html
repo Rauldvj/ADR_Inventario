@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+<body class="">
+  <img src="/static/Imagenes/Inacap_2.jpeg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40 z-[-1]">
+    {% include 'componentes/navbar.html' %}
+    
+    <div class="ml-72 px-2 mx-auto">
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="flex flex-col md:flex-row">
+
+        <div class="overflow-hidden md:w-3/5 flex items-center justify-center mt-12">
+          <div class="bg-white w-full md:w-4/5 lg:w-3/5 xl:w-2/3 shadow-3xl rounded-xl mx-auto my-auto">
+            <div class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/3 rounded-full">
+            </div>
+            <form action="{% url 'profile_update' user_profile.pk %}" method="post" enctype="multipart/form-data" class="p-6 md:p-6 bg-gradient-to-r bg-custom">
+
+              <h2 class="text-white text-2xl font-semibold mb-4">Editar Usuario</h2>
+              {% csrf_token %}
+
+              <!-- ---------FILA 1--------- -->
+              <div class="flex items-center text-lg mb-4 md:mb-4">
+                <div class="w-1/2 mr-2">
+                  <label for="username" class="form-label text-white text-sm mb-0">Username</label>
+                  <input type="text" name="username" id="username" value="{{ user_profile.username }}" readonly class="bg-gray-200 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Nombre de Usuario" />
+                </div>
+                <div class="w-1/2 ml-2">
+                  <label for="image" class="form-label text-white text-sm  mb-0">Foto de Perfil</label>
+                  <input type="file" name="image" id="image" class="bg-gray-200 rounded-sm pl-2 py-1 md:py-1 text-sm focus:outline-none w-full" />
+                </div>
+              </div>
+
+              <!-- ---------FILA 2--------- -->
+              <div class="flex items-center text-lg mb-4 md:mb-4">
+                <div class="w-1/2 mr-2">
+                  <label for="first_name" class="form-label text-white text-sm mb-0">Nombre</label>
+                  <input type="text" name="first_name" id="first_name" value="{{ user_profile.first_name }}" class="bg-gray-200 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Nombre" />
+                </div>
+                <div class="w-1/2 ml-2">
+                  <label for="last_name" class="form-label text-white text-sm mb-0">Apellidos</label>
+                  <input type="text" name="last_name" id="last_name" value="{{ user_profile.last_name }}" class="bg-gray-200 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Apellidos" />
+                </div>
+              </div>
+
+              <!-- ---------FILA 3--------- -->
+              <div class="flex items-center text-lg mb-6 md:mb-6">
+                <div class="w-1/2 mr-2">
+                  <label for="email" class="form-label text-white text-sm mb-0">Correo</label>
+                  <input type="email" name="email" id="email" value="{{ user_profile.email }}" class="bg-gray-200 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full" placeholder="Ejemplo: 7Kqeh@example.com" />
+                </div>
+                <div class="w-1/2 ml-2">
+                  <label for="group" class="form-label text-white text-sm mb-0">Cargo</label>
+                  <select name="group" id="group" class="bg-gray-200 rounded-sm pl-2 py-1 md:py-2 text-sm focus:outline-none w-full">
+                    <option disabled>Seleccione el Cargo</option>
+                    {% for singular_group, group_id in singular_groups %}
+                      <option value="{{ group_id }}" {% if group_id == group_id_user %}selected{% endif %}>{{ singular_group }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <!-- ---------FILA 5--------- -->
+              <div class="flex justify-center">
+                <button class="bg-amber-900 hover:bg-amber-600 text-sm p-2 md:p-3 text-white uppercase w-full rounded mx-auto mb-6" type="submit">Guardar Cambios</button>
+              </div>
+
+              <div class="flex justify-center">
+                <a class="bg-red-900 hover:bg-red-600 text-sm p-2 md:p-3 text-white uppercase text-center w-full rounded mx-auto" href="{% url 'profile_list' %}">
+                  REGRESAR AL PERFIL
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+{% endblock %}

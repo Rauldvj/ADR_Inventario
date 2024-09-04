@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Entrega de Equipo{% endblock %}
+
+{% block sidebar %}
+    {% include 'componentes/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="ml-64 mx-auto">
+    <div class="flex flex-col md:flex-row">
+        <!-- Contenedor de la imagen -->
+        <div class="flex-shrink-0 w-1/3 md:w-1/4 flex items-center justify-center p-4">
+            <img class="w-full h-auto rounded-lg shadow-lg" src="/static/Imagenes/adr_icon.png" alt="Imagen All In One">
+        </div>
+        <!-- Contenedor del formulario -->
+        <div class="flex-2 p-4 md:p-8 bg-gradient-to-r from-red-900 to-red-700 rounded-lg shadow-lg">
+            <h2 class="text-white text-2xl font-sans mb-4">Registro Entrega de Equipo</h2>
+            <form method="post" action="" class="space-y-4">
+                {% csrf_token %}
+                
+                <!-- Errores del formulario -->
+                {% if form.errors %}
+                    <div class="mb-4 bg-red-100 border border-red-500 text-red-700 p-3 rounded">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                <!-- Fila 1: Entregado por -->
+                <div class="grid grid-cols-1 gap-4 mb-4">
+                    <div>
+                        <label for="recibido_por" class="form-label text-white text-sm font-sans italic mb-1 block">Recibido por</label>
+                        <input type="text" name="recibido_por" id="recibido_por" class="form-input" placeholder="Entregado por" value="{{ form.recibido_por.value|default_if_none:'' }}">
+                        {% if form.recibido_por.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.recibido_por.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="fecha_entrega" class="form-label text-white text-sm font-sans italic mb-1 block">Fecha Entrega</label>
+                        <input type="date" name="fecha_entrega" id="fecha_entrega" class="form-input" placeholder="fecha_entrega" value="{{ form.fecha_entrega.value|default_if_none:'' }}">
+                        {% if form.fecha_entrega.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.fecha_entrega.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Fila 2: Otros campos -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <div class="flex flex-col">
+                        <label for="activo" class="form-label text-white text-sm font-sans italic mb-1 block">Tipo de Activo</label>
+                        <input type="text" name="activo" id="activo" class="form-input" placeholder="Marca" value="{{ form.activo.value|default_if_none:'' }}" readonly>
+                        {% if form.activo.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.activo.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="marca" class="form-label text-white text-sm font-sans italic mb-1 block">Marca</label>
+                        <input type="text" name="marca" id="marca" class="form-input" placeholder="Marca" value="{{ form.marca.value|default_if_none:'' }}" readonly>
+                        {% if form.marca.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.marca.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="modelo" class="form-label text-white text-sm font-sans italic mb-1 block">Modelo</label>
+                        <input type="text" name="modelo" id="modelo" class="form-input" placeholder="Modelo" value="{{ form.modelo.value|default_if_none:'' }}" readonly>
+                        {% if form.modelo.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.modelo.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="n_serie" class="form-label text-white text-sm font-sans italic mb-1 block">Número de Serie</label>
+                        <input type="text" name="n_serie" id="n_serie" class="form-input" placeholder="Número de Serie" value="{{ form.n_serie.value|default_if_none:'' }}" readonly>
+                        {% if form.n_serie.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.n_serie.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Fila 3: Campos adicionales -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="flex flex-col">
+                        <label for="unive" class="form-label text-white text-sm font-sans italic mb-1 block">UNIVE</label>
+                        <input type="text" name="unive" id="unive" class="form-input" placeholder="UNIVE" value="{{ form.unive.value|default_if_none:'' }}" readonly>
+                        {% if form.unive.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.unive.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="bdo" class="form-label text-white text-sm font-sans italic mb-1 block">BDO</label>
+                        <input type="text" name="bdo" id="bdo" class="form-input" placeholder="BDO" value="{{ form.bdo.value|default_if_none:'' }}" readonly>
+                        {% if form.bdo.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.bdo.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="netbios" class="form-label text-white text-sm font-sans italic mb-1 block">NetBios</label>
+                        <input type="text" name="netbios" id="netbios" class="form-input" placeholder="NetBios" value="{{ form.netbios.value|default_if_none:'' }}" readonly>
+                        {% if form.netbios.errors %}
+                            <div class="text-red-500 text-xs mt-1">
+                                {% for error in form.netbios.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Fila 4: Campos Booleanos -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" name="bolso" id="bolso" class="form-checkbox" {% if form.bolso.value %}checked{% endif %}>
+                        <label for="bolso" class="form-label text-white text-sm font-sans italic ml-2">Bolso o Mochila</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" name="equipo" id="equipo" class="form-checkbox" {% if form.equipo.value %}checked{% endif %}>
+                        <label for="equipo" class="form-label text-white text-sm font-sans italic ml-2">Equipo</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" name="cargador" id="cargador" class="form-checkbox" {% if form.cargador.value %}checked{% endif %}>
+                        <label for="cargador" class="form-label text-white text-sm font-sans italic ml-2">Cargador</label>
+                    </div>
+                </div>
+
+                <!-- Fila 5: Estado en Entregado -->
+                <div class="grid grid-cols-1 mb-4">
+                    <label class="form-label text-white text-sm font-sans italic mb-1 block">Entregar</label>
+                    <div class="flex items-center">
+                        {% for choice in form.entregado.field.choices %}
+                            <div class="flex items-center mr-4">
+                                <input type="radio" name="entregado" id="entregado_{{ forloop.counter }}" value="{{ choice.0 }}" {% if form.entregado.value == choice.0 %}checked{% endif %} class="form-radio">
+                                <label for="entregado_{{ forloop.counter }}" class="form-label text-white text-sm font-sans italic ml-2">{{ choice.1 }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if form.entregado.errors %}
+                        <div class="text-red-500 text-xs mt-1">
+                            {% for error in form.entregado.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+        
+                <!-- Botón Guardar -->
+                <div class="flex justify-start mt-16 mb-2">
+                    <button type="submit" class="bg-red-700 hover:bg-red-600 text-white font-medium py-2 px-4 rounded w-44">
+                        Guardar
+                    </button>
+                </div>
+                
+                <!-- Enlace Regresar -->
+                <div class="flex justify-start">
+                    <a href="{% url 'entrega_equipos_reporte' %}" class="bg-red-500 hover:bg-red-600 text-white font-medium text-center py-1 px-1 rounded w-44">
+                        Regresar a entrega de equipos
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Incluir archivo JavaScript -->
+<script src="{% static 'js/validaciones.js' %}"></script>
+{% endblock %}

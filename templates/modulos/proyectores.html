@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %} Proyectores {% endblock %}
+
+{% block sidebar %}
+    {% include 'componentes/sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<body class="">
+    <img src="/static/Imagenes/Inacap_2.jpeg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40 z-[-1]">
+<div class="">
+    <div class="container mx-auto px-2 py-2">
+        <div class="flex flex-col md:flex-row">
+            <div class="w-full md:w-5/6 md:ml-auto">
+
+                <!-- Formulario de filtrado -->
+                <div class="flex justify-between items-center mb-4">
+                    <form method="get" action="{% url 'proyectores' %}" class="flex items-center space-x-2">
+                        <label for="filter_ubicacion_proyector" class="block text-md leading-6 text-gray-800 font-bold">Filtrar por Ubicación:</label>
+                        <select id="filter_ubicacion_proyector" name="filter_ubicacion_proyector" class="block w-44 rounded-sm border-0 bg-gray-200 py-0 text-black shadow-sm ring-1 ring-inset ring-red-500 focus:ring-2 sm:text-sm sm:leading-6">
+                            <option value="" {% if filter_ubicacion_proyector == "" %}selected{% endif %}>Todos</option>
+                            {% for ubicacion in ubicaciones_proyector %}
+                                <option value="{{ ubicacion }}" {% if filter_ubicacion_proyector == ubicacion %}selected{% endif %}>{{ ubicacion }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="rounded-sm bg-gradient-to-br from-red-600 to-red-900 px-2 py-1 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500">Filtrar</button>
+                    </form>
+
+                    <!-- Botón de exportación a Excel -->
+                    <div>
+                        <a href="{% url 'descargar_excel' 'proyector' %}" class="rounded-sm bg-gradient-to-br from-green-600 to-green-900 px-2 py-2 text-white text-sm font-semibold shadow-sm hover:bg-green-400">Descargar Excel</a>
+                    </div>
+                </div>
+
+                <!-- Tabla de datos -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-center">
+                        <thead class="border-b font-sans bg-gradient-to-tr from-red-500 to-red-700">
+                            <tr>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">ESTADO</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">MARCA</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">MODELO</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">N° SERIE</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">EDIFICIO</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">SALA</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">REGISTRADO POR</th>
+                                <th scope="col" class="text-start font-sans text-xs text-white px-2 py-1">FECHA</th>
+
+                                {% if group_name_singular == 'ADR' %}
+                                <th scope="col" class="text-start font-sans text-sm font-semibold text-white px-2 py-1 w-24">MODIFICAR</th>
+                                {% endif %}
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for proyector in proyectores %}
+                            <tr class="border-b border-neutral-100 bg-white text-gray-700">
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.estado|capfirst }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.marca|capfirst }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.modelo|capfirst }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.n_serie|capfirst }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.ubicacion_proyector|capfirst }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.sala|capfirst }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.proyector_creado.first_name }} {{ proyector.proyector_creado.last_name }}</td>
+                                <td class="text-start font-sans border-r border-l text-black text-sm px-2 py-0 truncate">{{ proyector.fecha|date:"d/m/Y" }}</td>
+                            
+                                {% if group_name_singular == 'ADR' %}
+                                <td class="text-start font-sans border-r border-l bg-gradient-to-tr from-amber-600 to-amber-900 text-white text-sm px-2 py-0 w-24 truncate">
+                                    <a href="{% url 'edit_proyector' proyector.id %}">EDITAR</a>
+
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación y botones adicionales -->
+                <div class="flex flex-col items-center mt-5">
+                    <div class="text-black font-seminbold text-center mb-4">
+                        Página {{ proyectores.number }} de {{ proyectores.paginator.num_pages }}
+                    </div>
+                    <div class="inline-flex space-x-2">
+                        {% if proyectores.has_previous %}
+                            <a href="?page=1{% if filter_ubicacion_proyector %}&filter_ubicacion_proyector={{ filter_ubicacion_proyector }}{% endif %}"
+                               class="px-2 py-1 bg-red-700 text-white text-sm font-semibold rounded-sm hover:bg-red-400">Primero</a>
+                            <a href="?page={{ proyectores.previous_page_number }}{% if filter_ubicacion_proyector %}&filter_ubicacion_proyector={{ filter_ubicacion_proyector }}{% endif %}"
+                               class="px-2 py-1 bg-red-700 text-white text-sm font-semibold rounded-sm hover:bg-red-400">Anterior</a>
+                        {% endif %}
+                        {% if proyectores.has_next %}
+                            <a href="?page={{ proyectores.next_page_number }}{% if filter_ubicacion_proyector %}&filter_ubicacion_proyector={{ filter_ubicacion_proyector }}{% endif %}"
+                               class="px-2 py-1 bg-red-700 text-white text-sm font-semibold rounded-sm hover:bg-red-400">Siguiente</a>
+                            <a href="?page={{ proyectores.paginator.num_pages }}{% if filter_ubicacion_proyector %}&filter_ubicacion_proyector={{ filter_ubicacion_proyector }}{% endif %}"
+                               class="px-2 py-1 bg-red-700 text-white text-sm font-semibold rounded-sm hover:bg-red-400">Último</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Botón debajo de la tabla -->
+                <div class="mt-4">
+                    <a href="{% url 'add_proyector' %}" class="rounded-sm text-white text-sm text-center font-semibold bg-gradient-to-br from-red-600 to-red-900 px-2 py-2 w-24 md:w-auto">Agregar Activo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+{% endblock content %}
